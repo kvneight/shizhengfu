@@ -1,0 +1,43 @@
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+import org.tmatesoft.svn.core.wc.*
+
+def getSvnRevision() {
+    ISVNOptions options = SVNWCUtil.createDefaultOptions(true)
+    SVNClientManager clientManager = SVNClientManager.newInstance(options)
+    SVNStatusClient statusClient = clientManager.getStatusClient()
+    SVNStatus status = statusClient.doStatus(projectDir, false)
+    SVNRevision revision = status.getCommittedRevision()
+    return revision.getNumber() as int
+}
+
+buildscript {
+    repositories {
+        jcenter()
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
+        google()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:3.5.3'
+        classpath 'org.tmatesoft.svnkit:svnkit:1.8.11'
+
+        // NOTE: Do not place your application dependencies here; they belong
+        // in the individual module build.gradle files
+    }
+}
+
+allprojects {
+    repositories {
+        jcenter()
+        maven {
+            url 'https://maven.google.com/'
+            name 'Google'
+        }
+    }
+}
+
+task clean(type: Delete) {
+    delete rootProject.buildDir
+}

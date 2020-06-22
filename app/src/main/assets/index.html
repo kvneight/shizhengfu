@@ -1,0 +1,191 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" id="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0,user-scalable=no" />
+    <title></title>
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+            padding: 20px 30px;
+        }
+
+        .title {
+            line-height: 30px;
+        }
+
+        .work {
+            padding: 20px 0px;
+            line-height: 40px;
+        }
+
+            .work select {
+                width: 160px;
+                height: 40px;
+                outline: none;
+                font-size: 16px;
+                margin-right: 20px;
+                margin-bottom: 20px;
+            }
+
+            .work input {
+                width: 65%;
+                max-width: 400px;
+                height: 40px;
+                padding-left: 10px;
+                outline: none;
+                font-size: 16px;
+            }
+
+        .print {
+            width: 100%;
+            max-width: 450px;
+            height: 70px;
+            background: #eee;
+            display: block;
+            margin: 20px auto 40px;
+            border-radius: 5px;
+            -webkit-border-radius: 5px;
+            border: none;
+            font-size: 18px;
+        }
+
+        .oprate {
+            padding: 40px 0px;
+            border-top: 1px #ccc solid;
+        }
+
+            .oprate a {
+                width: 100%;
+                max-width: 450px;
+                height: 68px;
+                background: #fff;
+                display: block;
+                margin: 0px auto 30px;
+                border-radius: 5px;
+                -webkit-border-radius: 5px;
+                font-size: 18px;
+                text-align: center;
+                line-height: 70px;
+                border: 1px #bfbfbf solid;
+            }
+    </style>
+    <script type="text/javascript">
+        //打印
+        function printText() {
+            var strType = document.getElementById('ddlbType').value;
+            var str = document.getElementById('sleStr').value;
+            var tmp = "";
+            var type = parseInt(strType);
+            if(type == 2)
+            {
+            tmp = str;
+                //如果要打印二维码，要以JSON的形式分别传递二维码的内容和二维码下面要打印的文本，JSON内容为要打印的数组
+                str = "[{\"content\":\"" + tmp + "-01\",\"labels\":[\"01-第一行标签\",\"01-第二行标签\",\"01-abcdefg\",\"01-1234567890\"]}"
+                str += ",{\"content\":\"" + tmp + "-02\",\"labels\":[\"02-第一行标签\",\"02-第二行标签\",\"02-abcdefg\",\"02-1234567890\"]}"
+                str += ",{\"content\":\"" + tmp + "-03\",\"labels\":[\"03-第一行标签\",\"03-第二行标签\",\"03-abcdefg\",\"03-1234567890\"]}"
+                str += ",{\"content\":\"" + tmp + "-04\",\"labels\":[\"04-第一行标签\",\"04-第二行标签\",\"04-abcdefg\",\"04-1234567890\"]}"
+                str += ",{\"content\":\"" + tmp + "-05\",\"labels\":[\"05-第一行标签\",\"05-第二行标签\",\"05-abcdefg\",\"05-1234567890\"]}"
+                str += ",{\"content\":\"" + tmp + "-06\",\"labels\":[\"06-第一行标签\",\"06-第二行标签\",\"06-abcdefg\",\"06-1234567890\"]}"
+                str += ",{\"content\":\"" + tmp + "-07\",\"labels\":[\"07-第一行标签\",\"07-第二行标签\",\"07-abcdefg\",\"07-1234567890\"]}"
+                str += ",{\"content\":\"" + tmp + "-08\",\"labels\":[\"08-第一行标签\",\"08-第二行标签\",\"08-abcdefg\",\"08-1234567890\"]}"
+                str += ",{\"content\":\"" + tmp + "-09\",\"labels\":[\"09-第一行标签\",\"09-第二行标签\",\"09-abcdefg\",\"09-1234567890\"]}"
+                str += ",{\"content\":\"" + tmp + "-10\",\"labels\":[\"10-第一行标签\",\"10-第二行标签\",\"10-abcdefg\",\"10-1234567890\"]}]"
+            }
+            androidJS.printQRCode(type, str);
+        }
+        //选择要连接的蓝牙打印机
+        function bluetooth() {
+            androidJS.setBluetooth();
+        }
+        //获取当前已经连接的蓝牙打印机信息
+        function getPrintName() {
+            var printName = androidJS.getPrintName();
+            if (printName && printName.length > 0) {
+                androidJS.androidAlerForJS(printName);
+            } else {
+                androidJS.androidAlerForJS("未连接打印机");
+            }
+        }
+        //设置打印参数
+        function printSetup() {
+            androidJS.printSetup();
+        }
+        //设置APP的主页地址
+        function setUrl() {
+            androidJS.setH5RootUrl();
+        }
+        //断开与蓝牙打印机的连接
+        function printerDisConn(){
+            androidJS.closePrinter();
+        }
+        //退出APP
+        function appExit(){
+            androidJS.appExit();
+        }
+        //APP可以调用这个方法
+        function funForAndroid(){
+            alert('123');
+        }
+        //配置人脸识别参数
+        function faceServiceSetup(){
+            androidJS.faceServiceSetup();
+        }
+        //开始人脸登记
+        function userFaceRegist(){
+            androidJS.userFaceRegist("b6934e6b6b97372893e3d60251ad70eb");
+        }
+        //开始人脸登录
+        function userFaceCheck(){
+            androidJS.userFaceCheck();
+        }
+        //即时下载（同步）人脸数据
+        function downFaceData(){
+            androidJS.downFaceData();
+        }
+        //人脸登录回调
+        function faceCheckBack(tag,uid){
+            alert("tag="+tag+" uid="+uid);
+        }
+    </script>
+</head>
+<body>
+    <h4 class="title">打印测试</h4>
+    <div class="work">
+        <span>打印类型</span>
+        <select id="ddlbType">
+            <option value="0" selected>普通字符串</option>
+            <option value="1">条形码</option>
+            <option value="2">二维码</option>
+        </select>
+        <br />
+        <span>打印内容</span>
+        <input type="text" id="sleStr" value="" />
+        <br/>
+    </div>
+    <input type="button" onclick="printText()" value="打印" class="print" />
+    <div class="oprate">
+        <a onclick="faceServiceSetup()">配置人脸识别参数</a>
+        <a onclick="userFaceRegist()">人脸登记</a>
+        <a onclick="userFaceCheck()">人脸登录</a>
+        <a onclick="downFaceData()">下载(同步)人脸数据</a>
+        <a onclick="bluetooth()">链接打印机</a>
+        <a onclick="printerDisConn()">断开打印机</a>
+        <a onclick="getPrintName()">当前打印机</a>
+        <a onclick="printSetup()">打印参数设置</a>
+        <a onclick="setUrl()">系统主页地址设置</a>
+        <a onclick="location.href='http://test.youselect.net/home'">测试系统主页</a>
+        <a onclick="location.href='http://debugtbs.qq.com'">腾讯TBS自查</a>
+        <a onclick="location.href='up.html'">上传文件测试一</a>
+        <a onclick="location.href='index4.html'">上传文件测试二</a>
+        <a onclick="location.href='index5.html'">上传文件测试三</a>
+        <a onclick="location.href='uploadImgForH5.html'">上传文件测试四</a>
+        <a onclick="appExit()">退出程序</a>
+    </div>
+
+</body>
+</html>
